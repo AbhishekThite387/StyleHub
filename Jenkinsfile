@@ -45,10 +45,26 @@ pipeline {
         stage('Trivy Scan') {
             steps {
                 sh '''
-                    trivy image --severity HIGH,CRITICAL stylehub-backend
-                    trivy image --severity HIGH,CRITICAL stylehub-frontend
-                    trivy image --severity HIGH,CRITICAL stylehub-admin
-                '''
+                    mkdir -p trivy-reports
+
+                    trivy image \
+                    --severity HIGH,CRITICAL \
+                    --format table \
+                    -o trivy-reports/backend-trivy.txt \
+                    stylehub-backend
+
+                    trivy image \
+                    --severity HIGH,CRITICAL \
+                    --format table \
+                    -o trivy-reports/frontend-trivy.txt \
+                    stylehub-frontend
+
+                    trivy image \
+                    --severity HIGH,CRITICAL \
+                    --format table \
+                    -o trivy-reports/admin-trivy.txt \
+                    stylehub-admin
+                    '''
             }
         }
 
@@ -75,6 +91,13 @@ pipeline {
                     docker logout
                 '''
                 }
+            }
+        }
+        
+        post {
+            always {
+                archiveArtifacts artifacts: 'trivy-reports/*.txt',
+                     allowEmptyArchive: true
             }
         }
     }
