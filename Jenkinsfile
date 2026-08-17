@@ -93,12 +93,11 @@ pipeline {
                 }
             }
         }
-        
-        post {
-            always {
-                archiveArtifacts artifacts: 'trivy-reports/*.txt',
-                     allowEmptyArchive: true
-            }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'trivy-reports/*.txt',
+                    allowEmptyArchive: true
         }
     }
 }
