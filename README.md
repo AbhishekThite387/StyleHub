@@ -1,9 +1,5 @@
 # 🛍️ StyleHub — Full-Stack MERN Fashion E-Commerce Platform
 
-## DevSecOps Pipeline
-
-This project uses Jenkins for CI/CD automation, SonarQube for code quality and security analysis, and Trivy for Docker image vulnerability scanning.
-
 <div align="center">
 
 ![StyleHub](https://img.shields.io/badge/StyleHub-Fashion%20E--Commerce-black?style=for-the-badge)
