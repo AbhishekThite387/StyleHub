@@ -32,6 +32,16 @@ pipeline {
             }
         }
 
+        stage('Docker Build') {
+            steps {
+                sh '''
+                    docker build -t stylehub-backend ./backend
+                    docker build -t stylehub-frontend ./frontend
+                    docker build -t stylehub-admin ./styleHub_admin
+                '''
+            }
+        }
+
         stage('Trivy Scan') {
             steps {
                 sh '''
