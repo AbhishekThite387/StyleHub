@@ -51,5 +51,31 @@ pipeline {
                 '''
             }
         }
+
+        stage('Docker Push') {
+            steps {
+                withCredentials([
+                usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USERNAME',
+                    passwordVariable: 'DOCKER_PASSWORD'
+                )
+                ]) {
+                sh '''
+                    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+                    docker tag stylehub-backend $DOCKER_USERNAME/stylehub-backend:latest
+                    docker tag stylehub-frontend $DOCKER_USERNAME/stylehub-frontend:latest
+                    docker tag stylehub-admin $DOCKER_USERNAME/stylehub-admin:latest
+
+                    docker push $DOCKER_USERNAME/stylehub-backend:latest
+                    docker push $DOCKER_USERNAME/stylehub-frontend:latest
+                    docker push $DOCKER_USERNAME/stylehub-admin:latest
+
+                    docker logout
+                '''
+                }
+            }
+        }
     }
 }
