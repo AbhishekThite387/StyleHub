@@ -64,3 +64,18 @@ desktop.ini
 # ================================
 coverage/
 .nyc_output/
+
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/.terraform.lock.hcl
+
+# Sensitive Terraform files
+terraform/*.tfvars
+terraform/*.tfvars.json
+
+# Environment / secrets
+.env
+.env.*
